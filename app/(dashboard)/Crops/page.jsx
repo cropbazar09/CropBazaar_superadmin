@@ -1,19 +1,15 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+import { supabase } from "@/utils/supabase/client";
 
 export default function CropList() {
   const [crops, setCrops] = useState([]);
   const [editingCrop, setEditingCrop] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Fetch crops + seller info (JOIN users table)
+  // Fetch crops + seller info
   const fetchCrops = async () => {
     const { data, error } = await supabase
       .from("crops")
@@ -35,15 +31,12 @@ export default function CropList() {
     fetchCrops();
   }, []);
 
-  // Delete crop
   const deleteCrop = async (id) => {
-    if (!confirm("Are you sure you want to delete this crop?")) return;
-
+    if (!confirm("Are you sure?")) return;
     await supabase.from("crops").delete().eq("id", id);
     fetchCrops();
   };
 
-  // Update crop
   const updateCrop = async () => {
     setLoading(true);
 
@@ -73,12 +66,9 @@ export default function CropList() {
         {crops.length === 0 && <p>No crops added yet.</p>}
 
         {crops.map((crop) => (
-          <div
-            key={crop.id}
-            className="p-4 bg-white shadow border rounded-lg"
-          >
+          <div key={crop.id} className="p-4 bg-white shadow border rounded-lg">
+            {/* EDIT MODE */}
             {editingCrop?.id === crop.id ? (
-              /* ---------------- EDIT MODE ---------------- */
               <div className="space-y-3">
 
                 <input
@@ -138,34 +128,29 @@ export default function CropList() {
                     Cancel
                   </button>
                 </div>
+
               </div>
             ) : (
-              /* ---------------- VIEW MODE ---------------- */
+              /* VIEW MODE */
               <div>
-                {/* ------- SELLER DETAILS ------- */}
                 <p><strong>Seller Name:</strong> {crop.seller?.full_name || "Unknown"}</p>
-                <p><strong>Seller Role:</strong> {crop.seller?.role || crop.seller_role}</p>
-                <p><strong>Phone:</strong> {crop.seller?.phone || "N/A"}</p>
-                <p><strong>Location:</strong> {crop.seller?.location || "N/A"}</p>
+                <p><strong>Seller Role:</strong> {crop.seller?.role}</p>
+                <p><strong>Phone:</strong> {crop.seller?.phone}</p>
+                <p><strong>Location:</strong> {crop.seller?.location}</p>
 
                 <hr className="my-3" />
 
-                {/* ------- CROP DETAILS ------- */}
                 <p><strong>Crop:</strong> {crop.name}</p>
                 <p><strong>Quality:</strong> {crop.quality}</p>
-                <p><strong>Price per Kg:</strong> ₹{crop.price_per_kg}</p>
-                <p><strong>Total Quantity:</strong> {crop.total_quantity}</p>
-                <p><strong>Available Quantity:</strong> {crop.available_quantity}</p>
-                <p><strong>Lot Size:</strong> {crop.lot_size}</p>
+                <p><strong>Price:</strong> ₹{crop.price_per_kg}</p>
+                <p><strong>Available:</strong> {crop.available_quantity}</p>
 
-                {/* ------- IMAGES ------- */}
-                {crop.image_urls && crop.image_urls.length > 0 && (
+                {crop.image_urls?.length > 0 && (
                   <div className="flex gap-3 mt-3 overflow-x-auto">
-                    {crop.image_urls.map((url, index) => (
+                    {crop.image_urls.map((url, i) => (
                       <img
-                        key={index}
+                        key={i}
                         src={url}
-                        alt="Crop Image"
                         className="w-32 h-32 object-cover rounded border"
                       />
                     ))}
@@ -187,6 +172,7 @@ export default function CropList() {
                     Delete
                   </button>
                 </div>
+
               </div>
             )}
           </div>
