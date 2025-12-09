@@ -10,11 +10,11 @@ const layout = ({ children }) => {
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen bg-[#F4F5F9]">
-
                 <p className="text-gray-500">Loading...</p>
             </div>
         );
     }
+
     if (!session) {
         return (
             <div className="flex items-center justify-center h-screen bg-[#F4F5F9]">
@@ -22,6 +22,7 @@ const layout = ({ children }) => {
             </div>
         );
     }
+
     return (
         <div className="flex h-screen bg-[#F4F5F9]">
             <Sidebar />
@@ -34,7 +35,6 @@ const layout = ({ children }) => {
             </div>
         </div>
     );
-}
+};
 
 export default layout;
-
