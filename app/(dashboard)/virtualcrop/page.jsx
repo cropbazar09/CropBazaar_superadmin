@@ -22,7 +22,7 @@ export default function VirtualCropsAdminPage() {
 
     setCrops(data);
   };
-
+   
   useEffect(() => {
     fetchCrops();
   }, []);
@@ -131,7 +131,7 @@ export default function VirtualCropsAdminPage() {
 
         {crops.length === 0 && (
           <p className="text-center text-gray-500">
-            No virtual crops found
+            No virtual crops found it's empty
           </p>
         )}
       </div>
