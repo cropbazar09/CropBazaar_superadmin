@@ -1,46 +1,80 @@
+"use client";
+
 import CropImages from "./CropImages";
 import { supabase } from "@/utils/supabase/client";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 export default function CropCard({ crop, setEditingCrop, fetchCrops }) {
   const deleteCrop = async () => {
-    if (!confirm("Are you sure?")) return;
+    if (!confirm("Are you sure you want to delete this crop?")) return;
     await supabase.from("crops").delete().eq("id", crop.id);
     fetchCrops();
   };
 
   return (
-    <div className="p-4 bg-white shadow border rounded-lg">
+    <Card className="shadow-sm hover:shadow-md transition">
+      <CardHeader>
+        <CardTitle className="text-lg font-semibold">
+          {crop.name}
+        </CardTitle>
+      </CardHeader>
 
-      <p><strong>Seller:</strong> {crop.seller?.full_name || "Unknown"}</p>
-      <p><strong>Role:</strong> {crop.seller_role}</p>
-      <p><strong>Phone:</strong> {crop.seller?.phone}</p>
-      <p><strong>Location:</strong> {crop.seller?.location}</p>
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* LEFT: Details */}
+          <div className="md:col-span-2 space-y-4 text-sm">
+            <div className="grid grid-cols-2 gap-3">
+              <p><span className="font-medium">Seller:</span> {crop.seller?.full_name || "Unknown"}</p>
+              <p><span className="font-medium">Role:</span> {crop.seller_role}</p>
+              <p><span className="font-medium">Phone:</span> {crop.seller?.phone || "-"}</p>
+              <p><span className="font-medium">Location:</span> {crop.seller?.location || "-"}</p>
+            </div>
 
-      <hr className="my-3" />
+            <Separator />
 
-      <p><strong>Crop:</strong> {crop.name}</p>
-      <p><strong>Quality:</strong> {crop.quality}</p>
-      <p><strong>Price:</strong> ₹{crop.price_per_kg}</p>
-      <p><strong>Available:</strong> {crop.available_quantity}</p>
+            <div className="grid grid-cols-2 gap-3">
+              <p><span className="font-medium">Quality:</span> {crop.quality}</p>
+              <p><span className="font-medium">Price:</span> ₹{crop.price_per_kg}/kg</p>
+              <p><span className="font-medium">Available:</span> {crop.available_quantity}</p>
+            </div>
+          </div>
 
-      <CropImages images={crop.image_urls} />
+          {/* RIGHT: Small width image + buttons */}
+          <div className="flex flex-col items-center">
+            {/* Image (small width) */}
+            <div className="w-40 md:w-44">
+              <CropImages images={crop.image_urls} />
+            </div>
 
-      <div className="flex gap-4 mt-4">
-        <button
-          onClick={() => setEditingCrop(crop)}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-        >
-          Edit
-        </button>
+            {/* Small buttons */}
+            <div className="flex gap-2 mt-4 w-40 md:w-44">
+              <Button
+                size="sm"
+                className="w-full"
+                onClick={() => setEditingCrop(crop)}
+              >
+                Edit
+              </Button>
 
-        <button
-          onClick={deleteCrop}
-          className="px-4 py-2 bg-red-600 text-white rounded"
-        >
-          Delete
-        </button>
-      </div>
-
-    </div>
+              <Button
+                size="sm"
+                variant="destructive"
+                className="w-full"
+                onClick={deleteCrop}
+              >
+                Delete
+              </Button>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

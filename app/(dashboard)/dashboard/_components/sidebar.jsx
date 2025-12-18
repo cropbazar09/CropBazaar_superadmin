@@ -1,6 +1,6 @@
 "use client"
 
-import { LayoutDashboard, Briefcase, Database, CreditCard, Users, Newspaper, Ticket, SendToBack, FileQuestion, SquareAsterisk, Bell, Boxes, Cog, Mail } from "lucide-react"
+import { LayoutDashboard, Briefcase, Database, CreditCard, Users, Sprout , Currency } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -10,8 +10,9 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", id: "dashboard" },
   { icon: Briefcase, label: "Crops", href: "/Crops", id: "Crops" },
   { icon: Database, label: "Withdraw", href: "/Withdraw", id: "Withdraw" },
-   { icon: Briefcase, label: "Teams", href: "/teams", id: "teams" },
-     { icon: Briefcase, label: "Virtualcrop", href: "/virtualcrop", id: "virtualcrop" },
+   { icon: Users, label: "Teams", href: "/teams", id: "Users" },
+     { icon: Sprout , label: "Virtualcrop", href: "/virtualcrop", id: "virtualcrop" },
+          { icon:  Currency , label: "platform-fees", href: "/platform-fees", id: "platform-fees" },
 ]
 
 export function Sidebar() {
