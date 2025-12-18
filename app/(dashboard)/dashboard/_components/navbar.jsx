@@ -94,43 +94,7 @@ export function Navbar() {
     return (
         <header className="bg-[#F4F5F9]">
             <div className=" px-4 sm:px-6 bg-white lg:px-8 shadow-sm my-4 mx-6 rounded-xl">
-                <div className="flex justify-between h-16">
-                    <div className="flex">
-                        <div className="flex-shrink-0 flex items-center ">
-                            <Dialog open={selectType} onOpenChange={setSelectType}>
-                                <DialogTrigger asChild>
-                                    <Button variant="default" className="px-6 bg-blue-800 ">List New Job</Button>
-                                </DialogTrigger>
-                                <DialogContent className="p-0 gap-0">
-                                    <div className="px-4 py-6 flex items-center justify-between cursor-pointer" onClick={handleJobBox}>
-                                        <div className="flex gap-4 items-center">
-                                            <div className=" p-3 bg-[#C1DBFB] w-fit h-fit rounded-md text-bluecolor">
-                                                <BriefcaseBusiness />
-                                            </div>
-                                            <div className="">
-                                                <h2 className="text-lg font-semibold text-bluecolor">Post Full Time Job</h2>
-                                                <p className="text-sm text-muted-foreground">Post a full time job for your company</p>
-                                            </div>
-                                        </div>
-                                        <ChevronRight />
-                                    </div>
-                                    <div className="px-4 py-6 border-t flex items-center justify-between cursor-pointer" onClick={handleInternBox}>
-                                        <div className="flex gap-4 items-center">
-                                            <div className=" p-3 bg-[#F9DAFF] w-fit h-fit rounded-md text-[#7E1693]">
-                                                <BriefcaseBusiness />
-                                            </div>
-                                            <div className="">
-                                                <h2 className="text-lg font-semibold text-[#7E1693]">Post Internship</h2>
-                                                <p className="text-sm text-muted-foreground">Post an internship for your company</p>
-                                            </div>
-                                        </div>
-                                        <ChevronRight />
-                                    </div>
-                                </DialogContent>
-                            </Dialog>
-
-                        </div>
-                    </div>
+              
                     <div className="flex items-center">
                         <Link href={'/dashboard/notifications'}>
                             <Button variant="ghost" size="icon" className="relative">
@@ -171,7 +135,7 @@ export function Navbar() {
 
                     </div>
                 </div>
-            </div>
+         
 
         </header>
     )
