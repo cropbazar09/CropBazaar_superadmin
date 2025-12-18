@@ -94,7 +94,10 @@ export function Navbar() {
     return (
         <header className="bg-[#F4F5F9]">
             <div className=" px-4 sm:px-6 bg-white lg:px-8 shadow-sm my-4 mx-6 rounded-xl">
-              
+                <div className="flex justify-between h-16">
+                    <div className="flex">
+                   
+                    </div>
                     <div className="flex items-center">
                         <Link href={'/dashboard/notifications'}>
                             <Button variant="ghost" size="icon" className="relative">
@@ -135,7 +138,7 @@ export function Navbar() {
 
                     </div>
                 </div>
-         
+            </div>
 
         </header>
     )
